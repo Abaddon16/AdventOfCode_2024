@@ -44,5 +44,26 @@ public class Utils {
         return filePath;
     }
 
+    public static <T extends Comparable<T>> List<T> quickSort(List<T> list)
+    {
+        if (list == null || list.isEmpty()) return list;
+
+        List<T> left = new ArrayList<>();
+        List<T> right = new ArrayList<>();
+        T pivot = list.get(0);
+        T j;
+        for (int i=1; i<list.size(); i++)
+        {
+            j=list.get(i);
+            if (j.compareTo(pivot)<0) left.add(j);
+            else right.add(j);
+        }
+        left=quickSort(left);
+        right=quickSort(right);
+        left.add(pivot);
+        left.addAll(right);
+
+        return left;
+    }
 
 }
