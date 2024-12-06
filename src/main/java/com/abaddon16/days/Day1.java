@@ -1,4 +1,4 @@
-package com.abaddon16.days.day1;
+package com.abaddon16.days;
 
 import com.abaddon16.utils.Utils;
 
@@ -12,19 +12,16 @@ public class Day1 {
     private final List<Integer> rList = new ArrayList<>();
 
     public static void main(String[] args) {
-        var day1 = new Day1();
-        day1.solve();
+        new Day1().solve();
     }
 
-    private void solve()
-    {
+    private void solve() {
         readInput();
         part1();
         part2();
     }
 
-    private void part1()
-    {
+    private void part1() {
         List<Integer> left = Utils.quickSort(lList);
         List<Integer> right = Utils.quickSort(rList);
 
@@ -33,8 +30,7 @@ public class Day1 {
         System.out.println("[Part1] Distance: "+distance);
     }
 
-    private void part2()
-    {
+    private void part2() {
         int similarityScore = 0;
         for(Integer i: lList)
         {
@@ -45,15 +41,12 @@ public class Day1 {
         System.out.println("[Part2] Similarity Score: "+similarityScore);
     }
 
-    private void readInput(){
+    private void readInput() {
         List<String> lines = Utils.readInLines("Day1Input.txt");
-        lines.forEach(
-                line->
-                {
-                    String[] elements = line.split(" {3}");
-                    lList.add(Integer.valueOf(elements[0]));
-                    rList.add(Integer.valueOf(elements[1]));
-                }
-        );
+        lines.forEach(line-> {
+            String[] elements = line.split(" {3}");
+            lList.add(Integer.valueOf(elements[0]));
+            rList.add(Integer.valueOf(elements[1]));
+        });
     }
 }
