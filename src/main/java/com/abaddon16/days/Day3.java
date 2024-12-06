@@ -21,31 +21,25 @@ public class Day3 {
     }
 
     private void part1() {
-
-        Matcher matches = mulPattern.matcher(corruptedMemory);
-        long sumMultiplications = 0;
-        while(matches.find())
-        {
-            long left = Long.parseLong(matches.group(1));
-            long right = Long.parseLong(matches.group(2));
-            sumMultiplications += left *right;
-        }
+        long sumMultiplications = parseMultiplys(mulPattern.matcher(corruptedMemory));
         System.out.println("[Part 1] All Multiply Sum: "+sumMultiplications);
     }
 
     private void part2() {
         String dos = String.join("", corruptedMemory.split("don't\\(\\).*?do\\(\\)|don't\\(\\).*?$"));
+        long sumMultiplications = parseMultiplys(mulPattern.matcher(dos));
+        System.out.println("[Part 2] Flow Control Multiply Sum: "+sumMultiplications);
+    }
 
+    private long parseMultiplys(Matcher m){
         long sumMultiplications = 0;
-        Matcher mulMatches = mulPattern.matcher(dos);
-        while(mulMatches.find())
+        while(m.find())
         {
-            long left = Long.parseLong(mulMatches.group(1));
-            long right = Long.parseLong(mulMatches.group(2));
+            long left = Long.parseLong(m.group(1));
+            long right = Long.parseLong(m.group(2));
             sumMultiplications += left *right;
         }
-
-        System.out.println("[Part 2] Flow Control Multiply Sum: "+sumMultiplications);
+        return sumMultiplications;
     }
 
     private void readInput() {
