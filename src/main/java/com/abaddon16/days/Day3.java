@@ -2,7 +2,6 @@ package com.abaddon16.days;
 
 import com.abaddon16.utils.Utils;
 
-import java.util.Arrays;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -35,17 +34,15 @@ public class Day3 {
     }
 
     private void part2() {
-        List<String> dos = Arrays.stream(corruptedMemory.split("don't\\(\\).*?do\\(\\)|don't\\(\\).*?$")).toList();
+        String dos = String.join("", corruptedMemory.split("don't\\(\\).*?do\\(\\)|don't\\(\\).*?$"));
 
         long sumMultiplications = 0;
-        for(String s:dos) {
-            Matcher mulMatches = mulPattern.matcher(s);
-            while(mulMatches.find())
-            {
-                long left = Long.parseLong(mulMatches.group(1));
-                long right = Long.parseLong(mulMatches.group(2));
-                sumMultiplications += left *right;
-            }
+        Matcher mulMatches = mulPattern.matcher(dos);
+        while(mulMatches.find())
+        {
+            long left = Long.parseLong(mulMatches.group(1));
+            long right = Long.parseLong(mulMatches.group(2));
+            sumMultiplications += left *right;
         }
 
         System.out.println("[Part 2] Flow Control Multiply Sum: "+sumMultiplications);
