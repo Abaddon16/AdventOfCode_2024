@@ -88,20 +88,3 @@ public class Day5 {
         System.out.println(updates);
     }
 }
-
-class Pair<T>{
-    T first;
-    T second;
-    public Pair(T first, T second) {
-        this.first = first;
-        this.second = second;
-    }
-
-    @Override
-    public String toString() {
-        return "Pair{" +
-                "first=" + first +
-                ", second=" + second +
-                '}';
-    }
-}
