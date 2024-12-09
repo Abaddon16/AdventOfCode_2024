@@ -2,11 +2,8 @@ package com.abaddon16.days;
 
 import com.abaddon16.utils.Utils;
 
-import java.text.MessageFormat;
-import java.util.*;
-import java.util.regex.Matcher;
+import java.util.List;
 import java.util.regex.Pattern;
-import java.util.stream.Collectors;
 
 public class Day4 {
     List<String> input;
