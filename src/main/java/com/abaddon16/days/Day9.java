@@ -14,35 +14,74 @@ public class Day9 {
     private void solve() {
         readInput();
         part1();
-        part2();
+//        part2();
     }
 
     private void part1() {
         List<FileBlock> blocks = new ArrayList<>(this.blocks.size());
-        this.blocks.forEach(block -> {
-//            List<Integer> temp = new ArrayList<>(block.data);
-            blocks.add(new FileBlock(block.id));
-        });
+        this.blocks.forEach(block -> blocks.add(new FileBlock(block.id)));
 
-        int start= 0;
-        int end = blocks.size() - 1;
+        int leftCursor = 0;
+        int rightCursor = blocks.size() - 1;
 
         while (true) {
-            FileBlock emptySpace = blocks.get(start);
-            while (emptySpace.id != -1) emptySpace = blocks.get(++start);
-            FileBlock fileToMove = blocks.get(end);
-            while (fileToMove.id == -1) fileToMove = blocks.get(--end);
-            if(start>=end) break;
+            FileBlock emptySpace = blocks.get(leftCursor );
+            while (emptySpace.id != -1) emptySpace = blocks.get(++leftCursor );
+            FileBlock fileToMove = blocks.get(rightCursor);
+            while (fileToMove.id == -1) fileToMove = blocks.get(--rightCursor);
+            if(leftCursor >=rightCursor) break;
 
-            blocks.set(start, fileToMove);
-            blocks.set(end, emptySpace);
+            blocks.set(leftCursor , fileToMove);
+            blocks.set(rightCursor, emptySpace);
         }
-        System.out.println(this.blocks);
-        System.out.println(blocks);
-        System.out.println(checksum(blocks));
+        System.out.println("Part 1 Checksum: "+checksum(blocks));
     }
 
     private void part2() {
+        List<FileBlock> blocks = new ArrayList<>(this.blocks.size());
+        this.blocks.forEach(block -> blocks.add(new FileBlock(block.id)));
+        System.out.println(blocks);
+
+        int leftCursor = 0;
+        int rightCursor = blocks.size() - 1;
+        while (true) {
+            FileBlock emptySpace = blocks.get(leftCursor);
+            while (emptySpace.id != -1) emptySpace = blocks.get(++leftCursor);
+            FileBlock fileToMove = blocks.get(rightCursor);
+            while (fileToMove.id == -1) fileToMove = blocks.get(--rightCursor);
+//            System.out.println(leftCursor +", "+rightCursor);
+            if(leftCursor > rightCursor) break;
+
+            int spaceToMove = 0;
+            int filesToMove = 0;
+            int tempLeftCursor = leftCursor;
+            int tempRightCursor = rightCursor;
+            while(emptySpace.id==-1){
+                spaceToMove++;
+                emptySpace = blocks.get(++tempLeftCursor);
+            }
+            int id = fileToMove.id;
+            while(fileToMove.id==id){
+                filesToMove++;
+                fileToMove = blocks.get(--tempRightCursor);
+            }
+            tempRightCursor++;
+            tempLeftCursor--;
+
+            if(spaceToMove < filesToMove) {
+                leftCursor = ++tempLeftCursor;
+                continue;
+            }
+            for(int i=tempRightCursor; i<=rightCursor; i++){
+                blocks.set(i, new FileBlock(-1));
+            }
+            for(int i=leftCursor; i<tempLeftCursor; i++){
+                blocks.set(i, new FileBlock(id));
+            }
+            leftCursor = 0;
+        }
+        System.out.println(blocks);
+        System.out.println("Part 2 Checksum: "+checksum(blocks));
     }
 
     private String blocksToString(List<FileBlock> blocks) {
